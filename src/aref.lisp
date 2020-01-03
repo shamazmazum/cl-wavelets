@@ -1,9 +1,9 @@
 (in-package :cl-wavelets)
-(declaim (optimize (speed 3)))
-
-(declaim (ftype aref-function
+(declaim (optimize (speed 3))
+         (ftype aref-function
                 aref-zero aref-periodic
                 aref-mirror-1 aref-mirror-2)
+         #l"SBCL-1.5.0"
          (type aref-function *aref-func*))
 
 (defun aref-zero (array idx &key (start 0) (end (length array)))

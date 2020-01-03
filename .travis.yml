@@ -1,8 +1,11 @@
+dist: bionic
 language: common-lisp
 
 env:
   matrix:
     - LISP=sbcl
+    - LISP=allegro
+    - LISP=ccl
 
 install:
   - sudo apt-get install info install-info

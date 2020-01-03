@@ -7,6 +7,7 @@
     :serial t
     :components ((:file "src/package")
                  (:file "src/types")
+                 (:file "src/sbcl-fix")
                  (:file "src/aref")
                  (:file "src/lifting")
                  (:file "src/general")

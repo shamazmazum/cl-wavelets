@@ -1,6 +1,14 @@
 (in-package :cl-wavelets)
 
 (declaim (optimize (speed 3))
+         (ftype lifting-function
+                haar
+                cdf-2-2
+                cdf-4-2
+                inv-haar
+                inv-cdf-2-2
+                inv-cdf-4-2)
+         #l"SBCL-1.5.0"
          (type lifting-function
                *lifting-func*))
 
