@@ -6,5 +6,5 @@
            #:dwt-inverse
            #:dwt!
            #:dwt-inverse!
-           #:spectrogram
-           #:spectrogram!))
+           #:frequency-domain
+           #:frequency-domain!))

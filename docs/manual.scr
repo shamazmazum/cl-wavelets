@@ -1,0 +1,67 @@
+@begin[ref=index](section)
+   @title(Overview)
+   @c(cl-wavelets) is a library which includes various wavelet
+   transform algorithms for one dimensional signals (i.e. arrays of
+   type @c((simple-array (signed-byte 32) (*)))). Support for 2D arrays
+   and for floating-point samples is planned.
+@end(section)
+
+@begin(section)
+   @title(Wavelets)
+   Currently these wavelets are supported:
+   @begin(enum)
+      @item(Haar wavelet. Call transform functions with @c(:wavelet
+            :haar) argument to use this wavelet.)
+      @item(CDF (2,2) Call transform functions with @c(:wavelet
+            :cdf-2-2) argument to use this wavelet.)
+      @item(CDF (4,2) Call transform functions with @c(:wavelet
+            :cdf-4-2) argument to use this wavelet.)
+   @end(enum)
+@end(section)
+
+@begin(section)
+   @title(Extending signal over array boundaries)
+   When performing wavelet transform it is necessary to extend your
+   signal over array boundaries somehow (with exception of the case
+   when Haar wavelet is used). All algorithms currently work via
+   lifting scheme which supports two kinds of signal extension:
+   @begin(enum)
+      @item(Extend the signal with zeros. The signal simply equals to
+            zero out of array bounds and to content of the array
+            inside array bounds. Call transform functions with
+            @c(:boundary-style :zero) argument to choose this
+            extension mode.)
+      @item(Mirror the signal from array boundaries, creating a
+            continous signal. This is a preferred extension mode, call
+            transform functions with @c(:boundary-style :mirror) to
+            use it.)
+   @end(enum)
+@end(section)
+
+@begin(section)
+   @title(DWT)
+   DWT or discrete wavelet transform can be performed using @c(dwt)
+   or @c(dwt!) functions. The latter is in-place variant, which
+   modifies its first argument. The inverse of DWT can be performed
+   using @c(dwt-inverse) and @c(dwt-inverse!).
+   @cl:with-package[name="cl-wavelets"](
+      @cl:doc(function dwt!)
+      @cl:doc(function dwt-inverse!)
+      @cl:doc(function dwt)
+      @cl:doc(function dwt-inverse)
+   )
+@end(section)
+
+@begin(section)
+  @title(Signal in frequency domain)
+  A signal can be translated into frequency domain using
+  @c(frequency-domain) or @c(frequency-domain!).
+  @b(NB): Lifting schemes used in this library do not preserve the
+  norm (or energy) of a signal, they roughly preserve the average of a
+  signal in the first half of a transformed array. This will result in
+  unnormalized output produced by functions described in this section.
+  @cl:with-package[name="cl-wavelets"](
+      @cl:doc(function frequency-domain!)
+      @cl:doc(function frequency-domain)
+   )
+@end(section)

@@ -11,7 +11,7 @@
                  (:file "src/lifting")
                  (:file "src/general")
                  (:file "src/dwt")
-                 (:file "src/spectrogram"))
+                 (:file "src/freqdomain"))
     :in-order-to ((test-op (load-op "cl-wavelets/tests")))
     :perform (test-op (op system)
                       (declare (ignore op system))

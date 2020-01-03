@@ -60,10 +60,10 @@ vanishing moments"
 (in-suite pwt)
 
 ;; Here I can only check against results calculated by hand
-(test spectrogram
+(test frequency-analysis
   (is (equalp
-       (spectrogram (make-array 8
-                                :element-type '(signed-byte 32)
-                                :initial-contents (loop for i below 8 collect i))
-                    :wavelet :haar)
+       (frequency-domain (make-array 8
+                                     :element-type '(signed-byte 32)
+                                     :initial-contents (loop for i below 8 collect i))
+                         :wavelet :haar)
        #(3 4 0 2 0 0 0 1))))

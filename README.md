@@ -9,7 +9,7 @@ compression.
 
 Currently supported algorithms:
 * DWT
-* Spectrogram of a signal using PWT.
+* Frequency analysis using PWT.
 
 Currently supported wavelets:
 * Haar wavelet
