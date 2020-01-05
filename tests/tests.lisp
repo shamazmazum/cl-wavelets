@@ -57,6 +57,19 @@ vanishing moments"
   (is (check-vanishing-moments :cdf-2-2 2))
   (is (check-vanishing-moments :cdf-4-2 4)))
 
+(test normalization
+  "Lifting schemes have a scaling step which 'in theory' results in
+  the first coefficient of DWT being equal to average of the input
+  signal. Unfortunately, this is not practically true with exception
+  of constant signals. Nevertheless, do this test to make sure I am
+  not screwed up defining lifting schemes."
+  (let* ((random (random 100))
+         (array (make-array +array-len+
+                            :element-type '(signed-byte 32)
+                            :initial-element random)))
+    (loop for wavelet in (get-wavelets) do
+         (is (= random (aref (dwt array :wavelet wavelet) 0))))))
+
 (in-suite pwt)
 
 ;; Here I can only check against results calculated by hand
