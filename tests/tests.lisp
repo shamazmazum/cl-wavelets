@@ -17,7 +17,9 @@
 (defun random-sequence ()
   (make-array +array-len+
               :element-type '(signed-byte 32)
-              :initial-contents (loop repeat +array-len+ collect (random 100))))
+              :initial-contents (loop
+                                   repeat +array-len+
+                                   collect (+ (random 200) 100))))
 
 (defun calc-poly (x coeff &optional (acc 0))
   (if (null coeff) acc
