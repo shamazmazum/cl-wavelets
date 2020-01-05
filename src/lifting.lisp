@@ -55,39 +55,39 @@ TODO: Allow access to n-th odd or even sample."
               :key #'car)))
 
 (def-lifting-scheme (cdf-4-2 :cdf-4-2 :forward)
-  (decf even (truncate (+ odd odd-1) 4))
+  (decf even (ash (+ odd odd-1) -2))
   (decf odd (+ even even+1))
-  (decf even (- (truncate odd 16) (truncate (* odd-1 3) 16)))
+  (decf even (- (ash odd -4) (ash (* odd-1 3) -4)))
   (progn
-    (incf odd (* even 2))
-    (incf even (truncate odd 2))
+    (incf odd (ash even 1))
+    (incf even (ash odd -1))
     (decf odd even)))
 
 (def-lifting-scheme (inv-cdf-4-2 :cdf-4-2 :inverse)
   (progn
     (incf odd even)
-    (decf even (truncate odd 2))
-    (decf odd (* even 2)))
-  (incf even (- (truncate odd 16) (truncate (* odd-1 3) 16)))
+    (decf even (ash odd -1))
+    (decf odd (ash even 1)))
+  (incf even (- (ash odd -4) (ash (* odd-1 3) -4)))
   (incf odd (+ even even+1))  
-  (incf even (truncate (+ odd odd-1) 4)))
+  (incf even (ash (+ odd odd-1) -2)))
 
 (def-lifting-scheme (cdf-2-2 :cdf-2-2 :forward)
-  (decf odd (truncate (+ even even+1) 2))
-  (incf even (truncate (+ odd odd-1) 4)))
+  (decf odd (ash (+ even even+1) -1))
+  (incf even (ash (+ odd odd-1) -2)))
 
 (def-lifting-scheme (inv-cdf-2-2 :cdf-2-2 :inverse)
-  (decf even (truncate (+ odd odd-1) 4))
-  (incf odd (truncate (+ even even+1) 2)))  
+  (decf even (ash (+ odd odd-1) -2))
+  (incf odd (ash (+ even even+1) -1)))
 
 (def-lifting-scheme (haar :haar :forward)
   (progn
     (decf odd even)
-    (incf even (truncate odd 2))))
+    (incf even (ash odd -1))))
 
 (def-lifting-scheme (inv-haar :haar :inverse)
   (progn
-    (decf even (truncate odd 2))
+    (decf even (ash odd -1))
     (incf odd even)))
 
 (defparameter *lifting-func* #'haar
