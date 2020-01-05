@@ -1,7 +1,8 @@
 (in-package :cl-wavelets-tests)
 
-(def-suite dwt :description "DWT tests")
-(def-suite pwt :description "PWT tests")
+(def-suite aref :description "Various kinds of aref for extended signal")
+(def-suite dwt  :description "DWT tests")
+(def-suite pwt  :description "PWT tests")
 
 (defun run-tests ()
   (every #'identity
@@ -9,7 +10,7 @@
                    (let ((status (run suite)))
                      (explain! status)
                      (results-status status)))
-                 '(dwt pwt))))
+                 '(aref dwt pwt))))
 
 (defconstant +array-len+ 128
   "Length of an array used for testing")
@@ -38,6 +39,55 @@
     ;; Assume 75% of elements in transformed array equal to zero
     (> (count 0 array)
        (truncate (length array) 4/3))))
+
+(in-suite aref)
+(test aref-zero-test
+  (let ((array (random-sequence))
+        (wavelets::*aref-func* #'wavelets::aref-zero))
+    (is (= (aref array 1)
+           (wavelets::aref-extended array 1 :start 1 :end 4)))
+    (is (= (aref array 2)
+           (wavelets::aref-extended array 2 :start 1 :end 4)))
+    (is (= (aref array 3)
+           (wavelets::aref-extended array 3 :start 1 :end 4)))
+    (is (zerop
+         (wavelets::aref-extended array 4 :start 1 :end 4)))
+    (is (zerop
+         (wavelets::aref-extended array 5 :start 1 :end 4)))))
+
+(test aref-periodic-test
+  (let ((array (random-sequence))
+        (wavelets::*aref-func* #'wavelets::aref-periodic))
+    (is (= (aref array 1)
+           (wavelets::aref-extended array 1 :start 1 :end 4)))
+    (is (= (aref array 2)
+           (wavelets::aref-extended array 2 :start 1 :end 4)))
+    (is (= (aref array 3)
+           (wavelets::aref-extended array 3 :start 1 :end 4)))
+    (is (= (aref array 1)
+           (wavelets::aref-extended array 4 :start 1 :end 4)))))
+
+(test aref-mirror-1-test
+  (let ((array (random-sequence))
+        (wavelets::*aref-func* #'wavelets::aref-mirror-1))
+    (is (= (aref array 3)
+           (wavelets::aref-extended array -1 :start 1 :end 4)))
+    (is (= (aref array 2)
+           (wavelets::aref-extended array 0 :start 1 :end 4)))
+    (is (= (aref array 1)
+           (wavelets::aref-extended array 1 :start 1 :end 4)))
+    (is (= (aref array 2)
+           (wavelets::aref-extended array 2 :start 1 :end 4)))
+    (is (= (aref array 3)
+           (wavelets::aref-extended array 3 :start 1 :end 4)))
+    (is (= (aref array 2)
+           (wavelets::aref-extended array 4 :start 1 :end 4)))
+    (is (= (aref array 1)
+           (wavelets::aref-extended array 5 :start 1 :end 4)))
+    (is (= (aref array 2)
+           (wavelets::aref-extended array 6 :start 1 :end 4)))
+    (is (= (aref array 3)
+           (wavelets::aref-extended array 7 :start 1 :end 4)))))
 
 (in-suite dwt)
 (test dwt-inverse-identity

@@ -40,10 +40,10 @@ TODO: Allow access to n-th odd or even sample."
                 (type non-negative-fixnum start end))
        (symbol-macrolet ((even (aref array (+ 0 i)))
                          (odd  (aref array (+ 1 i)))
-                         (even-1 (funcall *aref-func* array (+ -2 i) :end end))
-                         (odd-1  (funcall *aref-func* array (+ -1 i) :end end))
-                         (even+1 (funcall *aref-func* array (+  2 i) :end end))
-                         (odd+1  (funcall *aref-func* array (+  3 i) :end end)))
+                         (even-1 (aref-extended array (+ -2 i) :end end))
+                         (odd-1  (aref-extended array (+ -1 i) :end end))
+                         (even+1 (aref-extended array (+  2 i) :end end))
+                         (odd+1  (aref-extended array (+  3 i) :end end)))
          ,@(loop for expr in body collect
                 `(loop for i from start below end by 2 do
                       ,expr)))
