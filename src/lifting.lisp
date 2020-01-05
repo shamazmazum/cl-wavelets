@@ -8,8 +8,7 @@
                 inv-haar
                 inv-cdf-2-2
                 inv-cdf-4-2)
-         #l"SBCL-1.5.0"
-         (type lifting-function
+         (type function
                *lifting-func*))
 
 (defparameter *forward-table* nil

@@ -1,14 +1,12 @@
 (in-package :cl-wavelets)
 (declaim (optimize (speed 3)))
 
-(defvar *freqdomain-tmp* nil
-  "Temporary array for analysis functions")
-
 ;; Full-depth PWT with rearranging subbands in natural frequency order
 ;; to calculate a signal in frequency domain
 (defun pwt-freq (array &key
                          (start 0)
                          (end (length array))
+                         tmp
                          inverse)
   (declare (type (sa-sb 32) array)
            (type non-negative-fixnum start end)
@@ -25,13 +23,15 @@
          :start   start
          :end     end
          :inverse inverse
-         :tmp     *freqdomain-tmp*)
+         :tmp     tmp)
         (pwt-freq array
                   :start start
-                  :end   half)
+                  :end   half
+                  :tmp   tmp)
         (pwt-freq array
                   :start   half
                   :end     end
+                  :tmp     tmp
                   :inverse t)
         array)))
 
@@ -46,9 +46,10 @@ slower. This function modifies the @c(array)."
   (declare (type (sa-sb 32) array))
   (let ((*aref-func* (get-boundary-style-lifting boundary-style))
         (*lifting-func* (get-forward-transform wavelet))
-        (*freqdomain-tmp* (make-array (/ (check-length (length array)) 2)
-                                       :element-type '(signed-byte 32))))
-    (pwt-freq array)))
+        (tmp (make-tmp-array
+              (check-power-of-2
+               (length array)))))
+    (pwt-freq array :tmp tmp)))
 
 (defun frequency-domain (array &key (wavelet :haar) (boundary-style :zero))
   "Translate a signal in frequency domain using PWT. This is a

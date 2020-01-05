@@ -1,6 +1,16 @@
 (in-package :cl-wavelets)
 (declaim (optimize (speed 3)))
 
+(declaim (ftype (function
+                 (non-negative-fixnum)
+                 (values non-negative-fixnum &optional))
+                check-power-of-2-p))
+(defun check-power-of-2 (x)
+  "Check if the argument is a power of two."
+  (declare (type non-negative-fixnum x))
+  (if (zerop (logand x (1- x))) x
+      (error "Argument must be power of 2")))
+
 ;; TODO: replace with compiler-macro?
 (defun phase-split (array &key
                             (start 0)
