@@ -11,6 +11,7 @@
                  (:file "src/aref")
                  (:file "src/lifting")
                  (:file "src/general")
+                 (:file "src/phases")
                  (:file "src/dwt")
                  (:file "src/freqdomain"))
     :in-order-to ((test-op (load-op "cl-wavelets/tests")))
