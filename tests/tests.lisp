@@ -132,3 +132,37 @@ vanishing moments"
                                      :initial-contents (loop for i below 8 collect i))
                          :wavelet :haar)
        #(3 4 0 2 0 0 0 1))))
+
+(defparameter *square-wave*
+  (make-array 512
+              :element-type '(signed-byte 32)
+              :initial-contents
+              (loop
+                 with s = nil
+                 for i below 51
+                 do
+                   (setq s (append s '(10 10 10 10 10
+                                       0  0  0  0  0)))
+                 finally (return (append s '(10 10)))))
+  "Periodic square wave with frequency f_{nyquist}/5")
+
+(test frequency-analysis-2
+  ;; Skip Haar and CDF-4-2
+  ;; The first is not precise enough and the last doesn't work yet for
+  ;; unknown reason.
+  (loop
+     for wavelet in '(#+nil
+                      :haar
+                      :cdf-2-2
+                      #+nil
+                      :cdf-4-2)
+     for freq-domain = (map 'vector #'abs
+                            (frequency-domain *square-wave*
+                                              :wavelet wavelet))
+     for max = (reduce #'max freq-domain)
+     for max-pos = (position max freq-domain)
+     for freq = (/ max-pos (length freq-domain))
+     do
+       (is-true
+        (and (> freq (- 1/5 1/100))
+             (< freq (+ 1/5 1/100))))))

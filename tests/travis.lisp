@@ -21,7 +21,7 @@
   (error 'not-implemented :proc (list 'quit code)))
 
 (defun do-all()
-  (asdf:load-system :cl-wavelets/tests)
+  (ql:quickload :cl-wavelets/tests)
   (portable-quit
    (if (funcall
         (intern (symbol-name :run-tests)

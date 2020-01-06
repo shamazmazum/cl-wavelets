@@ -40,3 +40,16 @@ first argument. Whose without `!` do not modify their first argument.
 
 For more info, generate a documentation with **codex** like so:
 `codex:document :cl-wavelets :skip-unsocumented t`.
+
+### Examples package
+
+You can load `cl-wavelets/examples` system which contains
+`cl-wavelets-examples` package which demonstrates some components of
+this library. For example, you can build a spectrogram of an
+uncompressed WAV file using `wavelets:frequency-domain` function. To
+build a spectrogram, try this:
+`wavelets-examples:spectrogram "/path/to/audio.wav" "/path/to/spectrogram.jpg"`
+This will produce `spectrogram.jpg` image with the spectrogram. Note,
+that the time axis is the vertical one, with the time going
+up-down. This is a spectrogram rotated by 90 degrees clockwise,
+actually.

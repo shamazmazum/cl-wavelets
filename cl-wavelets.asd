@@ -28,3 +28,12 @@
     :components ((:file "tests/package")
                  (:file "tests/tests" :depends-on ("tests/package")))
     :depends-on (:cl-wavelets :fiveam))
+
+(defsystem :cl-wavelets/examples
+    :name :cl-wavelets/examples
+    :version "0.1"
+    :author "Vasily Postnicov <shamaz.mazum@gmail.com>"
+    :license "2-clause BSD"
+    :components ((:file "examples/package")
+                 (:file "examples/spectrogram" :depends-on ("examples/package")))
+    :depends-on (:cl-wavelets :easy-audio :cl-jpeg))
