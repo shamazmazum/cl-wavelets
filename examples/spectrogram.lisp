@@ -1,13 +1,43 @@
 (in-package :cl-wavelets-examples)
 
 (defparameter *block-length* 512)
+(defparameter *ncolors* 1024)
+(defparameter *color-table*
+  (list
+   (cons 0                     #(0   0   0))
+   (cons (floor *ncolors* 4)   #(255 0   0))
+   (cons (floor *ncolors* 3)   #(0   0   255))
+   (cons (floor *ncolors* 1.5) #(0   255 255))
+   (cons (1- *ncolors*)        #(255 255 255))))
+
+(defun interpolate (x min max)
+  (destructuring-bind (min-x . min-color) min
+    (destructuring-bind (max-x . max-color) max
+      (let ((color-diff (map 'vector #'- max-color min-color))
+            (x-diff  (- max-x min-x))
+            (x-start (- x min-x)))
+        (map 'vector #'+ min-color
+             (map 'vector
+                  (lambda (color)
+                    (floor (* (/ x-start x-diff) color)))
+                  color-diff))))))
+
+(defun get-color (x)
+  "Get RGB color corresponding to integer value x in the range
+0 <= x < *ncolors*"
+  (let ((min-pos
+         (position x *color-table*
+                   :test #'>=
+                   :key  #'car
+                   :from-end t)))
+    (if (= min-pos (1- (length *color-table*)))
+        (cdr (nth min-pos *color-table*))
+        (interpolate x
+                     (nth min-pos *color-table*)
+                     (nth (1+ min-pos) *color-table*)))))
 
 (defstruct image-size
   w h)
-
-(defun get-color (x)
-  "Get RGB color corresponding to integer value x in range 0 <= x < 256"
-  (values x x x))
 
 (defun get-block (array start)
   "Get subsequence of ARRAY from position START with length
@@ -47,19 +77,25 @@ INPUT, and the output image is in array OUTPUT which has element type
     ;; Kinda normalize
     (let ((biggest (reduce #'max (map-into freq #'abs freq))))
       (if (not (zerop biggest))
-          (map-into freq (lambda (x) (floor (* x 255) biggest)) freq)))
+          (map-into freq
+                    (lambda (x)
+                      (floor (* x (1- *ncolors*))
+                             biggest))
+                    freq)))
 
     (loop
        for i from (* 3 row (image-size-w size)) by 3
        for col below (image-size-w size)
        for x = (aref freq (floor (* *block-length* col)
                                  (image-size-w size)))
+       for color = (get-color x)
        do
-         (multiple-value-bind (r g b)
-             (get-color x)
-           (setf (aref output (+ i 0)) r
-                 (aref output (+ i 1)) g
-                 (aref output (+ i 2)) b))))
+         (setf (aref output (+ i 0))
+               (aref color 0)
+               (aref output (+ i 1))
+               (aref color 1)
+               (aref output (+ i 2))
+               (aref color 2))))
   output)
 
 (defun read-wav (name)
