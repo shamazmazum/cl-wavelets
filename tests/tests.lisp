@@ -119,8 +119,15 @@ vanishing moments"
          (array (make-array +array-len+
                             :element-type '(signed-byte 32)
                             :initial-element random)))
+    ;; Allow the first element of DWT to be smaller or bigger than
+    ;; average by 1 because of integer arithmetic is used which can
+    ;; produce inexact results by dropping fractional part of result
+    ;; of each lifting.
     (loop for wavelet in (get-wavelets) do
-         (is (= random (aref (dwt array :wavelet wavelet) 0))))))
+         (is (<= (abs
+                  (- (aref (dwt array :wavelet wavelet) 0)
+                     random))
+                 1)))))
 
 (in-suite pwt)
 
@@ -154,6 +161,7 @@ vanishing moments"
      for wavelet in '(#+nil
                       :haar
                       :cdf-2-2
+                      :cdf-3-1
                       #+nil
                       :cdf-4-2)
      for freq-domain = (map 'vector #'abs

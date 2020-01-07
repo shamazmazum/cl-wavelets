@@ -15,6 +15,7 @@ Currently supported algorithms:
 Currently supported wavelets:
 * Haar wavelet
 * CDF (2,2) wavelet
+* CDF (3,1) wavelet
 * CDF (4,2) wavelet
 
 ### Usage

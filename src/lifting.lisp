@@ -71,6 +71,28 @@ TODO: Allow access to n-th odd or even sample."
   (incf odd (+ even even+1))  
   (incf even (ash (+ odd odd-1) -2)))
 
+(def-lifting-scheme (cdf-3-1 :cdf-3-1 :forward)
+  (decf even (floor odd-1 3))
+  (decf odd  (ash (+ (* 9 even)
+                       (* 3 even+1))
+                  -3))
+  (progn
+    (incf even (floor (* 2 odd) 9))
+    (incf odd  (ash (* 3 even) -1))
+    (incf even (floor odd 3))
+    (decf odd even)))
+
+(def-lifting-scheme (inv-cdf-3-1 :cdf-3-1 :inverse)
+  (progn
+    (incf odd even)
+    (decf even (floor odd 3))
+    (decf odd  (ash (* 3 even) -1))
+    (decf even (floor (* 2 odd) 9)))
+  (incf odd  (ash (+ (* 9 even)
+                     (* 3 even+1))
+                  -3))
+  (incf even (floor odd-1 3)))
+
 (def-lifting-scheme (cdf-2-2 :cdf-2-2 :forward)
   (decf odd (ash (+ even even+1) -1))
   (incf even (ash (+ odd odd-1) -2)))
