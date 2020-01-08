@@ -1,6 +1,12 @@
-(in-package :cl-wavelets-examples)
+(in-package :cl-wavelets-spectrogram)
 
-(defparameter *block-length* 512)
+(defparameter *block-length* 512
+  "The size of data chunks the input signal is divided to before PWT
+is performed. Must be a power of 2.")
+(defparameter *wavelet* :cdf-2-2
+  "Wavelet used for spectrogram calculation. @b(NB): @c(:cdf-4-2) works
+very bad, do not use it. @c(:cdf-2-2) is the best choice.")
+
 (defparameter *ncolors* 1024)
 (defparameter *color-table*
   (list
@@ -71,8 +77,7 @@ INPUT, and the output image is in array OUTPUT which has element type
   (declare (type image-size size))
   (let* ((datablock (get-block-for-row input row size))
          (freq (frequency-domain datablock
-                                 :wavelet :cdf-2-2
-                                 :boundary-style :mirror)))
+                                 :wavelet *wavelet*)))
 
     ;; Kinda normalize
     (let ((biggest (reduce #'max (map-into freq #'abs freq))))
@@ -113,17 +118,26 @@ list of channel data and a format subchunk."
                       :decompose t)
        format))))
 
-(defun spectrogram (filename-wav filename-jpg
-                    &key (w 800) (h 600))
+(defun spectrogram (filename-wav
+                    filename-jpg
+                    &key
+                      (w 600)
+                      (h 800)
+                      (block-length *block-length*)
+                      (wavelet *wavelet*))
   "Build a spectrogram for the first channel of an audio file in WAV
 format with the name @c(filename-wav). The spectrogram is written as a
 jpeg image with the name @c(filename-jpg). @c(w) and @c(h) parameters
 define dimensions of the image.
 
-PWT with CDF (2,2) wavelet is used in this function."
+The spectrogram is built using @c(frequency-domain) function with data
+block of length @c(block-length) each constructed from the input data.
+Wavelet @c(wavelet) is used in the PWT algorithm."
   (let ((input (first (read-wav filename-wav)))
         (output (make-array (* 3 w h) :element-type '(unsigned-byte 8)))
-        (size (make-image-size :w w :h h)))
+        (size (make-image-size :w w :h h))
+        (*block-length* block-length)
+        (*wavelet* wavelet))
     (loop for row below h do
          (fill-row input output row size))
     (encode-image filename-jpg output 3 h w)))

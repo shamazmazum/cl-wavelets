@@ -1,7 +1,9 @@
-(defpackage cl-wavelets-examples
+(defpackage cl-wavelets-spectrogram
   (:use #:cl
         #:wav
         #:cl-jpeg
         #:wavelets)
-  (:nicknames :wavelets-examples)
-  (:export #:spectrogram))
+  (:nicknames :wavelets-spectrogram)
+  (:export #:spectrogram
+           #:*block-length*
+           #:*wavelet*))

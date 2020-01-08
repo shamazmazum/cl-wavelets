@@ -44,13 +44,17 @@ For more info, generate a documentation with **codex** like so:
 
 ### Examples package
 
-You can load `cl-wavelets/examples` system which contains
-`cl-wavelets-examples` package which demonstrates some components of
-this library. For example, you can build a spectrogram of an
-uncompressed WAV file using `wavelets:frequency-domain` function. To
-build a spectrogram, try this:
-`wavelets-examples:spectrogram "/path/to/audio.wav" "/path/to/spectrogram.jpg"`
+You can load `cl-wavelets/examples` system which contains packages to
+demonstrate some components of this library. For example, you can
+build a spectrogram of an uncompressed WAV file making use of
+`wavelets:frequency-domain` function. To build a spectrogram, try this:
+~~~~
+(wavelets-spectrogram:spectrogram "/path/to/audio.wav"
+                                  "/path/to/spectrogram.jpg")
+~~~~
 This will produce `spectrogram.jpg` image with the spectrogram. Note,
 that the time axis is the vertical one, with the time going
 up-down. This is a spectrogram rotated by 90 degrees clockwise,
-actually.
+actually. Also, the quality of the spectrogram will be much worse
+compared to the qualily of a spectrogram obtained via FFT. This is
+because the filters used in the process are far from ideal.

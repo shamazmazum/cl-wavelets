@@ -1,5 +1,5 @@
 (:docstring-markup-format :scriba
- :systems (:cl-wavelets)
+ :systems (:cl-wavelets :cl-wavelets/examples)
  :documents ((:title "cl-wavelets"
               :authors ("Vasily Postnicov")
               :output-format (:type :multi-html

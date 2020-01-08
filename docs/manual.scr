@@ -65,3 +65,28 @@
       @cl:doc(function frequency-domain)
    )
 @end(section)
+
+@begin(section)
+  @title(Spectrogram)
+  For demonstration purposes, there is @c(spectrogram) function in
+  @c(wavelets-spectrogram) package, which can be loaded with asdf like
+  so: @c((asdf:load-system :cl-wavelets/examples)). This function can
+  produce a spectrogram of an uncompressed wav file (it uses only the
+  first channel).
+  @cl:with-package[name="cl-wavelets-spectrogram"](
+    @cl:doc(function spectrogram)
+    @cl:doc(variable *wavelet*)
+    @cl:doc(variable *block-length*)
+  )
+
+  Here is some examples of histograms with decription (all of them are obtained
+  using CDF-2-2 wavelet):
+  @begin(figure)
+    Band-limited saw up-chirp signal. You can see five harmonics here.
+    @image[src=saw-chirp.jpg]()
+  @end(figure)
+  @begin(figure)
+    One sine up-chirp and one sine down-chirp.
+    @image[src=sine-chirps.jpg]()
+  @end(figure)
+@end(section)
