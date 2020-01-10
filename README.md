@@ -6,7 +6,8 @@ cl-wavelets
 various kinds of wavelet transform. Currently they all work with
 arrays of type `(simple-array (signed-byte 32) (*))` (i.e. they are
 1D). This makes this library suitable for audio processing and
-compression.
+compression. For more info visit the project page
+[here](http://shamazmazum.github.io/cl-wavelets).
 
 Currently supported algorithms:
 * DWT

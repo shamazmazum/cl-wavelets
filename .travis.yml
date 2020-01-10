@@ -2,9 +2,10 @@ dist: bionic
 language: common-lisp
 
 env:
+  global:
+    secure: "MreW2xdh1TMPRRS39/SMEF41ZYe0QmtKDFzebsluM5yZTWO1OW5ym16OEc5OHM167EL/U6+6ueqoxeeAw/et/iv76bwGm+4oLqrqNsziXV4GDkrntdtZX2rBHTkR5FxKwVelrRTSLDjFUyRdvuw63Ljc5O/bBPXzHDOeB+3dyt0gCtMxV+XbGLGICQy4uwjtsM1oEDiyvK0WZiutfaWUHVZhCgnyAo7cvV95+ZAMIKh6vRQppedjMeRyjmOAB0k+Xs4p8Rps1T+1EMt32FfHEz+YBRT8AqszethcrBKNv1j3fD7HNLCh/TWKkoNlUXzcqTIo3IucNwY3YkoQrMBHxRLb3BrsiqLS7krEyIoISEu5UIwYFDPJtoGisqv5+xLrkxvnb4IbSjDRrXWsRZDMtNNEciiGSTvM4MKFY5BU8xaDqxo8/PGR0o1eXDfiHJGe6sMlYsKavmOzDWixEWbgcNlb15qzr077b/5P39kINNr2/W0HU7e4XJ8boq4Q/s8e3xAYSkeArOVoKiXeVyXcnwIUwhiY30hIXvnRO9eM+uQlV2eLYnctTWvcW/KUYSPu2I6oV3BNPiJi+8h0CFZ1oKYaFSgVKX5c9l/Qf4DJWhebMSMx6H2/eVtEgdwmbFmKQ64Gk8jY4h9n5vwFDCxAeihTbHiXvSX1jshIq7VBaJA="
   matrix:
     - LISP=sbcl
-    - LISP=allegro
     - LISP=ccl
 
 install:
@@ -15,7 +16,19 @@ install:
     else
       curl https://raw.githubusercontent.com/luismbo/cl-travis/master/install.sh | sh;
     fi
+  - git clone --depth=1 git://github.com/shamazmazum/codex.git ~/lisp/codex
   - cl -e '(ql-util:without-prompting (ql:add-to-init-file))'
 
 script:
   - cl -f $TRAVIS_BUILD_DIR/tests/travis.lisp
+  - cl -l codex -e '(codex:document :cl-wavelets :skip-undocumented t)'
+
+deploy:
+  provider: pages
+  skip_cleanup: true
+  github_token: "$GITHUB_TOKEN"
+  keep_history: true
+  local_dir: "$TRAVIS_BUILD_DIR/docs/build/cl-wavelets/html"
+  edge: true
+  on:
+    branch: master
