@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Spectrogram &ndash; cl-wavelets
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="spectrogram"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="spectrogram"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="spectrogram"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">cl-wavelets » Spectrogram</h1>
+  <article id="article" data-section="spectrogram">
+    <aside>
+      <ol class="toc"><li><a href="index.html" data-node="index">Overview</a></li><li><a href="wavelets.html" data-node="wavelets">Wavelets</a></li><li><a href="extending-signal-over-array-boundaries.html" data-node="extending-signal-over-array-boundaries">Extending signal over array boundaries</a></li><li><a href="dwt.html" data-node="dwt">DWT</a></li><li><a href="signal-in-frequency-domain.html" data-node="signal-in-frequency-domain">Signal in frequency domain</a></li><li><a href="spectrogram.html" data-node="spectrogram">Spectrogram</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      <p>
+  For demonstration purposes, there is <code>spectrogram</code> function in
+  <code>wavelets-spectrogram</code> package, which can be loaded with asdf like
+  so: <code>(asdf:load-system :cl-wavelets/examples)</code>. This function can
+  produce a spectrogram of an uncompressed wav file (it uses only the
+  first channel).
+  
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">spectrogram</code><code class="codex-lambda-list">(filename-wav filename-jpg &amp;key (w 600) (h 800) (block-length *block-length*) (wavelet *wavelet*))</code><div class="codex-docstring"><p>Build a spectrogram for the first channel of an audio file in WAV
+format with the name <code>filename-wav</code>. The spectrogram is written as a
+jpeg image with the name <code>filename-jpg</code>. <code>w</code> and <code>h</code> parameters
+define dimensions of the image.</p><p>The spectrogram is built using <code>frequency-domain</code> function with data
+block of length <code>block-length</code> each constructed from the input data.
+Wavelet <code>wavelet</code> is used in the PWT algorithm.</p></div></div>
+    <div class="codex-doc-node codex-variable"><code class="codex-name">*wavelet*</code><div class="codex-docstring">Wavelet used for spectrogram calculation. <b>NB</b>: <code>:cdf-4-2</code> works
+very bad, do not use it. <code>:cdf-2-2</code> is the best choice.</div></div>
+    <div class="codex-doc-node codex-variable"><code class="codex-name">*block-length*</code><div class="codex-docstring">The size of data chunks the input signal is divided to before PWT
+is performed. Must be a power of 2.</div></div>
+  </p><p>  Here is some examples of histograms with decription (all of them are obtained
+  using CDF-2-2 wavelet):
+  </p><figure><img src="saw-chirp.jpg"/><figcaption>    Band-limited saw up-chirp signal. You can see five harmonics here.
+    
+  </figcaption></figure><p>
+  </p><figure><img src="sine-chirps.jpg"/><figcaption>    One sine up-chirp and one sine down-chirp.
+    
+  </figcaption></figure><p>
+</p>
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>

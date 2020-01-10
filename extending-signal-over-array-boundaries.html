@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Extending signal over array boundaries &ndash; cl-wavelets
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="extending-signal-over-array-boundaries"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="extending-signal-over-array-boundaries"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="extending-signal-over-array-boundaries"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">cl-wavelets » Extending signal over array boundaries</h1>
+  <article id="article" data-section="extending-signal-over-array-boundaries">
+    <aside>
+      <ol class="toc"><li><a href="index.html" data-node="index">Overview</a></li><li><a href="wavelets.html" data-node="wavelets">Wavelets</a></li><li><a href="extending-signal-over-array-boundaries.html" data-node="extending-signal-over-array-boundaries">Extending signal over array boundaries</a></li><li><a href="dwt.html" data-node="dwt">DWT</a></li><li><a href="signal-in-frequency-domain.html" data-node="signal-in-frequency-domain">Signal in frequency domain</a></li><li><a href="spectrogram.html" data-node="spectrogram">Spectrogram</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      
+   When performing wavelet transform it is necessary to extend your
+   signal over array boundaries somehow (with exception of the case
+   when Haar wavelet is used). All algorithms currently work via
+   lifting scheme which supports two kinds of signal extension:
+   <ol><li>Extend the signal with zeros. The signal simply equals to
+            zero out of array bounds and to content of the array
+            inside array bounds. Call transform functions with
+            <code>:boundary-style :zero</code> argument to choose this
+            extension mode.</li><li>Mirror the signal from array boundaries, creating a
+            continous signal. This is a preferred extension mode, call
+            transform functions with <code>:boundary-style :mirror</code> to
+            use it.</li></ol>
+
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>

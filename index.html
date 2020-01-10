@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Overview &ndash; cl-wavelets
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="index"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="index"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="index"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">cl-wavelets » Overview</h1>
+  <article id="article" data-section="index">
+    <aside>
+      <ol class="toc"><li><a href="index.html" data-node="index">Overview</a></li><li><a href="wavelets.html" data-node="wavelets">Wavelets</a></li><li><a href="extending-signal-over-array-boundaries.html" data-node="extending-signal-over-array-boundaries">Extending signal over array boundaries</a></li><li><a href="dwt.html" data-node="dwt">DWT</a></li><li><a href="signal-in-frequency-domain.html" data-node="signal-in-frequency-domain">Signal in frequency domain</a></li><li><a href="spectrogram.html" data-node="spectrogram">Spectrogram</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      
+   <code>cl-wavelets</code> is a library which includes various wavelet
+   transform algorithms for one dimensional signals (i.e. arrays of
+   type <code>(simple-array (signed-byte 32)(*))</code>). Support for 2D arrays
+   and for floating-point samples is planned.
+
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>
