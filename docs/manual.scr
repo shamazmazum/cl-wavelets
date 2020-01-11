@@ -90,3 +90,32 @@
     @image[src=sine-chirps.jpg]()
   @end(figure)
 @end(section)
+
+@begin(section)
+  @title(Best-basis PWT)
+  The best-basis PWT (stands for "packet wavelet transform") is a form of a
+  discrete wavelet transform which picks a best representation of a signal from
+  some set of possible representations. By the word "best" I mean such a
+  representation for which the value of a special function, called @i(the cost
+  function), is minimal. Currently, only one family of cost functions is
+  supported, which is a family of @i(threshold cost functions). The threshold
+  cost functions have a parameter @c(tr) and for every element @c(x) in an array
+  its value is @c((if (< (abs x) tr) 0 1)). The value of this functions for an
+  array is the sum of its values for every element of that array. So, PWT gives
+  such a representation of the input signal that the number of elements whose
+  magnitude is less than a threshold is as big as possible.
+
+  Like DWT, PWT produces an array with transformed signal, but also a key value
+  used as hint to inverse functions to properly inverse the transform.
+
+  @cl:with-package[name="cl-wavelets"](
+    @cl:doc(variable *threshold*)
+    @cl:doc(function make-threshold-cost)
+    @cl:doc(function pwt!)
+    @cl:doc(function pwt-inverse!)
+    @cl:doc(function pwt)
+    @cl:doc(function pwt-inverse)
+    @cl:doc(function basis-key=>bit-vector)
+    @cl:doc(function bit-vector=>basis-key)
+)
+@end(section)

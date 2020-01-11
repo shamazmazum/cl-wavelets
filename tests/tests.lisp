@@ -34,12 +34,6 @@
                  with poly = (loop repeat n collect (1+ (random 5)))
                  for x below +array-len+ collect (calc-poly x poly))))
 
-(defun check-vanishing-moments (wavelet n)
-  (let ((array (dwt (gen-poly n) :wavelet wavelet)))
-    ;; Assume 75% of elements in transformed array equal to zero
-    (> (count 0 array)
-       (truncate (length array) 4/3))))
-
 (in-suite aref)
 (test aref-zero-test
   (let ((array (random-sequence))
@@ -91,7 +85,7 @@
 
 (in-suite dwt)
 (test dwt-inverse-identity
-  "Check if DWT^1 DWT = I"
+  "Check if DWT^{-1} DWT = I"
   (loop for boundary-style in '(:mirror :zero) do
        (loop
           for wavelet in (get-wavelets)
@@ -102,12 +96,19 @@
                                           :boundary-style boundary-style)
                                      :wavelet wavelet
                                      :boundary-style boundary-style))))))
-(test vanishing-moments
+
+(test dwt-vanishing-moments
   "Check if mother wavelet functions have the desired amount of
 vanishing moments"
-  (is (check-vanishing-moments :haar    1))
-  (is (check-vanishing-moments :cdf-2-2 2))
-  (is (check-vanishing-moments :cdf-4-2 4)))
+  (flet ((check-vanishing-moments (wavelet n)
+           (let ((array (dwt (gen-poly n) :wavelet wavelet)))
+             ;; Assume ~50% of elements in transformed array equal to zero
+             (> (count 0 array)
+                (floor (length array) 2)))))
+    (is-true (check-vanishing-moments :haar    1))
+    (is-true (check-vanishing-moments :cdf-2-2 2))
+    (is-true (check-vanishing-moments :cdf-3-1 3))
+    (is-true (check-vanishing-moments :cdf-4-2 4))))
 
 (test normalization
   "Lifting schemes have a scaling step which 'in theory' results in
@@ -174,3 +175,41 @@ vanishing moments"
        (is-true
         (and (> freq (- 1/5 1/100))
              (< freq (+ 1/5 1/100))))))
+
+(test pwt-inverse-identity
+  "Check if PWT^{-1} PWT = I"
+  (loop for boundary-style in '(:mirror :zero) do
+       (loop
+          for wavelet in (get-wavelets)
+          for array = (random-sequence) do
+            (multiple-value-bind (array-trans basis-idx)
+                (pwt array
+                     :wavelet wavelet
+                     :boundary-style boundary-style
+                     :cost (make-threshold-cost 20))
+              (is (equalp
+                   array
+                   (pwt-inverse array-trans basis-idx
+                                :wavelet wavelet
+                                :boundary-style boundary-style)))))))
+
+#+nil
+(test pwt-vanishing-moments
+  "Check if mother wavelet functions have the desired amount of
+vanishing moments"
+  (flet ((check-vanishing-moments (wavelet n)
+           (let ((array (pwt (gen-poly n) :wavelet wavelet)))
+             ;; Assume 50% of elements in transformed array equal to zero
+             (> (count 0 array)
+                (truncate (length array) 2)))))
+    (is-true (check-vanishing-moments :haar    1))
+    (is-true (check-vanishing-moments :cdf-2-2 2))
+    (is-true (check-vanishing-moments :cdf-3-1 3))
+    (is-true (check-vanishing-moments :cdf-4-2 4))))
+
+(test basis-key<=>bit-vector
+  "Test 2 representations of basis keys"
+  (is (equal (basis-key=>bit-vector '((nil nil) (nil (nil (nil nil)))))
+             #*11001010100))
+  (is (equalp (bit-vector=>basis-key #*11001010100)
+              '((nil nil) (nil (nil (nil nil)))))))

@@ -3,12 +3,12 @@
 
 (defun dwt! (array &key (wavelet :haar) (boundary-style :mirror))
   "Perform in-place DWT transform on array of integer samples. @c(wavelet)
-argument can one of @c(:haar), @c(:cdf-2-2) or @c(:cdf-4-2) (numbers
-after @c(cdf) part mean number of vanishing moments for analysis and
-synthesis filters). @c(boundary-style) can be @c(:zero) or @c(:mirror)
-and determines how the signal is extended beyond array
-boundaries. Usually @c(:mirror) gives better results, but is a little
-slower."
+argument can one of @c(:haar), @c(:cdf-2-2), @c(:cdf-3-1) or
+@c(:cdf-4-2) (numbers after @c(cdf) part mean number of vanishing
+moments for analysis and synthesis filters). @c(boundary-style) can be
+@c(:zero) or @c(:mirror) and determines how the signal is extended
+beyond array boundaries. Usually @c(:mirror) gives better results, but
+is a little slower."
   (declare (type (sa-sb 32) array))
   (with-lifting-scheme (wavelet boundary-style)
     (let* ((len (check-power-of-2 (length array)))
