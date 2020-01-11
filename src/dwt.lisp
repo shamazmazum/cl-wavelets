@@ -10,32 +10,30 @@ and determines how the signal is extended beyond array
 boundaries. Usually @c(:mirror) gives better results, but is a little
 slower."
   (declare (type (sa-sb 32) array))
-  (let* ((*aref-func* (get-boundary-style-lifting boundary-style))
-         (*lifting-func* (get-forward-transform wavelet))
-         (len (check-power-of-2 (length array)))
-         (times (1- (integer-length len)))
-         (tmp (make-array (/ len 2) :element-type '(signed-byte 32))))
-    (declare (type non-negative-fixnum len))
-    (loop for i below times do
-         (funcall *lifting-func* array :end (ash len (- i)))
-         (setq array (phase-split array :tmp tmp :end (ash len (- i))))))
-  array)
+  (with-lifting-scheme (wavelet boundary-style)
+    (let* ((len (check-power-of-2 (length array)))
+           (times (1- (integer-length len)))
+           (tmp (make-array (/ len 2) :element-type '(signed-byte 32))))
+      (declare (type non-negative-fixnum len))
+      (loop for i below times do
+           (funcall *lifting-func* array :end (ash len (- i)))
+           (phase-split array :tmp tmp :end (ash len (- i)))))
+  array))
 
 (defun dwt-inverse! (array &key (wavelet :haar) (boundary-style :mirror))
   "Perform in-place inversion of DWT transform. The @c(wavelet) and
 @c(boundary-style) arguments must be the same as for the corresponding
 call to DWT! function"
   (declare (type (sa-sb 32) array))
-  (let* ((*aref-func* (get-boundary-style-lifting boundary-style))
-         (*lifting-func* (get-inverse-transform wavelet))
-         (len (check-power-of-2 (length array)))
-         (times (1- (integer-length len)))
-         (tmp (make-tmp-array len)))
-    (declare (type non-negative-fixnum len))
-    (loop for i below times do
-         (setq array (phase-mix array :tmp tmp :end (ash 2 i)))
-         (funcall *lifting-func* array :end (ash 2 i))))
-  array)
+  (with-lifting-scheme (wavelet boundary-style :inverse t)
+    (let* ((len (check-power-of-2 (length array)))
+           (times (1- (integer-length len)))
+           (tmp (make-tmp-array len)))
+      (declare (type non-negative-fixnum len))
+      (loop for i below times do
+           (phase-mix array :tmp tmp :end (ash 2 i))
+           (funcall *lifting-func* array :end (ash 2 i))))
+    array))
 
 (defun dwt (array &key (wavelet :haar) (boundary-style :mirror))
   "This function is a non-destructive equivalent of @c(dwt!) function"

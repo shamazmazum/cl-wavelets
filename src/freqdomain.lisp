@@ -44,12 +44,11 @@ and determines how the signal is extended beyond array
 boundaries. Usually @c(:mirror) gives better results, but is a little
 slower. This function modifies the @c(array)."
   (declare (type (sa-sb 32) array))
-  (let ((*aref-func* (get-boundary-style-lifting boundary-style))
-        (*lifting-func* (get-forward-transform wavelet))
-        (tmp (make-tmp-array
-              (check-power-of-2
-               (length array)))))
-    (pwt-freq array :tmp tmp)))
+  (with-lifting-scheme (wavelet boundary-style)
+    (let ((tmp (make-tmp-array
+                (check-power-of-2
+                 (length array)))))
+      (pwt-freq array :tmp tmp))))
 
 (defun frequency-domain (array &key (wavelet :haar) (boundary-style :zero))
   "Translate a signal in frequency domain using PWT. This is a

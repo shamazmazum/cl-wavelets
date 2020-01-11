@@ -127,3 +127,13 @@ TODO: Allow access to n-th odd or even sample."
 (defun get-wavelets ()
   "Get a list of available wavelets"
   (mapcar #'car *forward-table*))
+
+(defmacro with-lifting-scheme ((lifting aref-style &key inverse) &body body)
+  "Set @c(*lifting-func*) and @c(*aref-func*) parameters to desired
+value."
+  `(let ((*aref-func* (get-boundary-style-lifting ,aref-style))
+         (*lifting-func* (,(if inverse
+                               'get-inverse-transform
+                               'get-forward-transform)
+                           ,lifting)))
+     ,@body))
