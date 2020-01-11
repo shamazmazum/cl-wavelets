@@ -31,7 +31,7 @@
               :element-type '(signed-byte 32)
               :initial-contents
               (loop
-                 with poly = (loop repeat n collect (1+ (random 5)))
+                 with poly = (loop repeat n collect (1+ (random 10)))
                  for x below +array-len+ collect (calc-poly x poly))))
 
 (in-suite aref)
@@ -102,9 +102,14 @@
 vanishing moments"
   (flet ((check-vanishing-moments (wavelet n)
            (let ((array (dwt (gen-poly n) :wavelet wavelet)))
-             ;; Assume ~50% of elements in transformed array equal to zero
-             (> (count 0 array)
-                (floor (length array) 2)))))
+             ;; Assume ~75% of elements in transformed array equal to
+             ;; zero. Nope, not zero, see the next comment
+
+             ;; With CDF-3-1 polynomials of the second degree do not
+             ;; completely vanish but can remain as a some small value
+             ;; like -1 or 1
+             (> (count-if (lambda (x) (< (abs x) 3)) array)
+                (floor (length array) 4/3)))))
     (is-true (check-vanishing-moments :haar    1))
     (is-true (check-vanishing-moments :cdf-2-2 2))
     (is-true (check-vanishing-moments :cdf-3-1 3))
