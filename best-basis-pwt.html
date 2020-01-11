@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Best-basis PWT &ndash; cl-wavelets
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="best-basis-pwt"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="best-basis-pwt"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="best-basis-pwt"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">cl-wavelets » Best-basis PWT</h1>
+  <article id="article" data-section="best-basis-pwt">
+    <aside>
+      <ol class="toc"><li><a href="index.html" data-node="index">Overview</a></li><li><a href="wavelets.html" data-node="wavelets">Wavelets</a></li><li><a href="extending-signal-over-array-boundaries.html" data-node="extending-signal-over-array-boundaries">Extending signal over array boundaries</a></li><li><a href="dwt.html" data-node="dwt">DWT</a></li><li><a href="signal-in-frequency-domain.html" data-node="signal-in-frequency-domain">Signal in frequency domain</a></li><li><a href="spectrogram.html" data-node="spectrogram">Spectrogram</a></li><li><a href="best-basis-pwt.html" data-node="best-basis-pwt">Best-basis PWT</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      <p>
+  The best-basis PWT (stands for &quot;packet wavelet transform&quot;) is a form of a
+  discrete wavelet transform which picks a best representation of a signal from
+  some set of possible representations. By the word &quot;best&quot; I mean such a
+  representation for which the value of a special function, called <i>the cost
+  function</i>, is minimal. Currently, only one family of cost functions is
+  supported, which is a family of <i>threshold cost functions</i>. The threshold
+  cost functions have a parameter <code>tr</code> and for every element <code>x</code> in an array
+  its value is <code>(if (&lt; (abs x) tr) 0 1)</code>. The value of this functions for an
+  array is the sum of its values for every element of that array. So, PWT gives
+  such a representation of the input signal that the number of elements whose
+  magnitude is less than a threshold is as big as possible.</p><p>  Like DWT, PWT produces an array with transformed signal, but also a key value
+  used as hint to inverse functions to properly inverse the transform.</p><p>  
+    <div class="codex-doc-node codex-variable"><code class="codex-name">*threshold*</code><div class="codex-docstring">Default value for an argument to <code>make-threshold-cost</code>.</div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">make-threshold-cost</code><code class="codex-lambda-list">(&amp;optional (threshold *threshold*))</code><div class="codex-docstring">Make a cost function which depends on the number of items whose
+  magnitude is greater than <code>threshold</code>.</div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (cost *cost-func*))</code><div class="codex-docstring"><p>Perform a best-basis PWT transform of an <code>array</code>. Unlike DWT
+which has a fixed basis of scaled and translated mother wavelet
+functions and a scaling function, this transform picks the best basis,
+minimizing the <code>cost</code> function over possible results. The meaning of
+<code>wavelet</code> and <code>boundary-style</code> arguments is the same as for DWT.
+See the documentation for <code>dwt!</code> for information.</p><p>Two values are returned: the first is a transformed array and the
+second is a basis key object which must be passed to <code>pwt-inverse!</code>
+or <code>pwt-inverse</code> to invert the transform.</p><p>This function modifies its first argument.</p></div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt-inverse!</code><code class="codex-lambda-list">(array basis-key &amp;key (wavelet haar) (boundary-style mirror))</code><div class="codex-docstring">Inverse the PWT. The <code>array</code> and <code>basis-key</code> must match the
+values returned by <code>pwt!</code> or <code>pwt</code>. <code>wavelet</code> and
+<code>boundary-style</code> must also match their counterparts used for the
+forward transform.</div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (cost *cost-func*))</code><div class="codex-docstring">This function is a non-destructive version of <code>pwt!</code>.</div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt-inverse</code><code class="codex-lambda-list">(array basis-key &amp;key (wavelet haar) (boundary-style mirror))</code><div class="codex-docstring">This is a non-destructive version of <code>pwt-inverse!</code>.</div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">basis-key=&gt;bit-vector</code><code class="codex-lambda-list">(basis-key)</code><div class="codex-docstring">Transform a basis key returned from <code>pwt</code> or <code>pwt!</code> to a bit
+vector form.</div></div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">bit-vector=&gt;basis-key</code><code class="codex-lambda-list">(vector)</code><div class="codex-docstring">Transform a bit vector to a basis key.</div></div>
+
+</p>
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>
