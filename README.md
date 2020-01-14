@@ -12,6 +12,7 @@ compression. For more info visit the project page
 Currently supported algorithms:
 * DWT
 * Frequency analysis using PWT.
+* Best-basis PWT.
 
 Currently supported wavelets:
 * Haar wavelet
