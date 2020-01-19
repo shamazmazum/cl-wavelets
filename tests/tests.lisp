@@ -86,16 +86,19 @@
 (in-suite dwt)
 (test dwt-inverse-identity
   "Check if DWT^{-1} DWT = I"
-  (loop for boundary-style in '(:mirror :zero) do
-       (loop
-          for wavelet in (get-wavelets)
-          for array = (random-sequence) do
-            (is (equalp array
-                        (dwt-inverse (dwt array
-                                          :wavelet wavelet
-                                          :boundary-style boundary-style)
-                                     :wavelet wavelet
-                                     :boundary-style boundary-style))))))
+  (dolist (steps '(0 1 2))
+    (dolist (boundary-style '(:mirror :zero))
+      (dolist (wavelet (get-wavelets))
+        (let ((array (random-sequence)))
+          (is (equalp array
+                      (dwt-inverse
+                       (dwt array
+                            :wavelet        wavelet
+                            :boundary-style boundary-style
+                            :steps          steps)
+                       :wavelet        wavelet
+                       :boundary-style boundary-style
+                       :steps          steps))))))))
 
 (test dwt-vanishing-moments
   "Check if mother wavelet functions have the desired amount of
