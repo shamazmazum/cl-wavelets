@@ -150,7 +150,8 @@ forward transform."
                               :end end)
                    (funcall *lifting-func* array
                             :start start
-                            :end end)))))
+                            :end end))
+                 array)))
     (with-lifting-scheme (wavelet boundary-style :inverse t)
       (pwt-inverse% basis-key 0 (length array)))))
 
