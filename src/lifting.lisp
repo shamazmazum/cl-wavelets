@@ -57,6 +57,26 @@ TODO: Allow access to n-th odd or even sample."
                  (:inverse '*inverse-table*))
               :key #'car)))
 
+(def-lifting-scheme (cdf-6-2 :cdf-6-2 :forward)
+  (decf odd (floor (+ even even+1) 6))
+  (decf even (ash (* (+ odd odd-1) 9) -4))
+  (decf odd (floor (* (+ even even+1) 4) 3))
+  (incf even (ash (- (* odd-1 5) odd) -5))
+  (progn
+    (incf odd (ash even 2))
+    (incf even (ash (* odd 3) -2))
+    (decf odd even)))
+
+(def-lifting-scheme (inv-cdf-6-2 :cdf-6-2 :inverse)
+  (progn
+    (incf odd even)
+    (decf even (ash (* odd 3) -2))
+    (decf odd (ash even 2)))
+  (decf even (ash (- (* odd-1 5) odd) -5))
+  (incf odd (floor (* (+ even even+1) 4) 3))
+  (incf even (ash (* (+ odd odd-1) 9) -4))
+  (incf odd (floor (+ even even+1) 6)))
+
 (def-lifting-scheme (cdf-4-2 :cdf-4-2 :forward)
   (decf even (ash (+ odd odd-1) -2))
   (decf odd (+ even even+1))
