@@ -6,7 +6,7 @@
    and for floating-point samples is planned.
 @end(section)
 
-@begin(section)
+@begin[ref=wavelets](section)
    @title(Wavelets)
    Currently these wavelets are supported:
    @begin(enum)
@@ -18,7 +18,11 @@
             :cdf-3-1) argument to use this wavelet.)
       @item(CDF (4,2) Call transform functions with @c(:wavelet
             :cdf-4-2) argument to use this wavelet.)
+      @item(CDF (6,2) Call transform functions with @c(:wavelet
+            :cdf-6-2) argument to use this wavelet.)
    @end(enum)
+   The numbers after @c(:cdf-) part mean numbers of vanishing moments
+   for analysis and synthesis mother wavelets.
 @end(section)
 
 @begin(section)

@@ -8,10 +8,9 @@
   "Perform in-place DWT transform on array of integer samples. Meaning
 of key arguments:
 @begin(enum)
-  @item(@c(wavelet) Wavelet to use. Can one of @c(:haar),
-        @c(:cdf-2-2), @c(:cdf-3-1) or @c(:cdf-4-2) (numbers after
-        @c(cdf) part mean number of vanishing moments for analysis and
-        synthesis filters).)
+  @item(@c(wavelet) Wavelet to use. Consult
+        @ref[id=wavelets](wavelets) section of this manual to know
+        possible values of this argument.)
   @item(@c(boundary-style) Determines how the signal is extended
         beyond array boundaries. Can be @c(:zero) or
         @c(:mirror). Usually @c(:mirror) gives better results, but
