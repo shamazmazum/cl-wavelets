@@ -15,12 +15,16 @@
 (defconstant +array-len+ 32
   "Length of an array used for testing")
 
-(defun random-sequence ()
+(defun sine-sequence ()
   (make-array +array-len+
               :element-type '(signed-byte 32)
-              :initial-contents (loop
-                                   repeat +array-len+
-                                   collect (+ (random 200) 100))))
+              :initial-contents
+              (loop
+                 for x below +array-len+
+                 collect (floor
+                          (* 1000
+                             (sin (/ (* 2 pi x)
+                                     (1- +array-len+))))))))
 
 (defun calc-poly (x coeff &optional (acc 0))
   (if (null coeff) acc
@@ -36,7 +40,7 @@
 
 (in-suite aref)
 (test aref-zero-test
-  (let ((array (random-sequence))
+  (let ((array (sine-sequence))
         (wavelets::*aref-func* #'wavelets::aref-zero))
     (is (= (aref array 1)
            (wavelets::aref-extended array 1 :start 1 :end 4)))
@@ -50,7 +54,7 @@
          (wavelets::aref-extended array 5 :start 1 :end 4)))))
 
 (test aref-periodic-test
-  (let ((array (random-sequence))
+  (let ((array (sine-sequence))
         (wavelets::*aref-func* #'wavelets::aref-periodic))
     (is (= (aref array 1)
            (wavelets::aref-extended array 1 :start 1 :end 4)))
@@ -62,7 +66,7 @@
            (wavelets::aref-extended array 4 :start 1 :end 4)))))
 
 (test aref-mirror-1-test
-  (let ((array (random-sequence))
+  (let ((array (sine-sequence))
         (wavelets::*aref-func* #'wavelets::aref-mirror-1))
     (is (= (aref array 3)
            (wavelets::aref-extended array -1 :start 1 :end 4)))
@@ -86,10 +90,10 @@
 (in-suite dwt)
 (test dwt-inverse-identity
   "Check if DWT^{-1} DWT = I"
-  (dolist (steps '(0 1 2))
-    (dolist (boundary-style '(:mirror :zero))
-      (dolist (wavelet (get-wavelets))
-        (let ((array (random-sequence)))
+  (let ((array (sine-sequence)))
+    (dolist (steps '(0 1 2))
+      (dolist (boundary-style '(:mirror :zero))
+        (dolist (wavelet (get-wavelets))
           (is (equalp array
                       (dwt-inverse
                        (dwt array
@@ -191,13 +195,14 @@ vanishing moments"
   "Check if PWT^{-1} PWT = I"
   (loop for boundary-style in '(:mirror :zero) do
        (loop
+          with array = (sine-sequence)
           for wavelet in (get-wavelets)
-          for array = (random-sequence) do
+          do
             (multiple-value-bind (array-trans basis-idx)
                 (pwt array
                      :wavelet wavelet
                      :boundary-style boundary-style
-                     :cost (make-threshold-cost 20))
+                     :cost (make-threshold-cost 10))
               (is (equalp
                    array
                    (pwt-inverse array-trans basis-idx
