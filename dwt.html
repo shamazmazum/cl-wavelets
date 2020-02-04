@@ -57,10 +57,9 @@
    
       <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">dwt!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (steps 0))</code><div class="codex-docstring">Perform in-place DWT transform on array of integer samples. Meaning
 of key arguments:
-<ol><li><code>wavelet</code> Wavelet to use. Can one of <code>:haar</code>,
-        <code>:cdf-2-2</code>, <code>:cdf-3-1</code> or <code>:cdf-4-2</code>(numbers after
-        <code>cdf</code> part mean number of vanishing moments for analysis and
-        synthesis filters).</li><li><code>boundary-style</code> Determines how the signal is extended
+<ol><li><code>wavelet</code> Wavelet to use. Consult
+        <a id="wavelets" href="wavelets.html" data-node="wavelets">wavelets</a> section of this manual to know
+        possible values of this argument.</li><li><code>boundary-style</code> Determines how the signal is extended
         beyond array boundaries. Can be <code>:zero</code> or
         <code>:mirror</code>. Usually <code>:mirror</code> gives better results, but
         is a little slower.</li><li><code>steps</code> Specify the number of filtering and downsampling
