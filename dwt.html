@@ -63,8 +63,9 @@ of key arguments:
         beyond array boundaries. Can be <code>:zero</code> or
         <code>:mirror</code>. Usually <code>:mirror</code> gives better results, but
         is a little slower.</li><li><code>steps</code> Specify the number of filtering and downsampling
-        steps taken to perform the transform. A special value <code>0</code>
-        means the full transform.</li></ol></div></div>
+        steps taken to perform the transform. This value can be
+        negative or zero. Zero means the full DWT transform and a
+        negative value means <i>maximal dwt steps</i> - <code>(abs steps)</code>.</li></ol></div></div>
       <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">dwt-inverse!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (steps 0))</code><div class="codex-docstring">Perform in-place inversion of DWT transform. The <code>wavelet</code>,
 <code>boundary-style</code> and <code>steps</code> arguments must be the same as for the
 corresponding call to DWT! function</div></div>
