@@ -1,6 +1,10 @@
 (in-package :cl-wavelets)
 (declaim (optimize (speed 3)))
 
+(defun clamp-steps (steps max-steps)
+  (declare (type fixnum steps max-steps))
+  (min max-steps (max 0 steps)))
+
 (defun dwt! (array &key
                      (wavelet        :haar)
                      (boundary-style :mirror)
@@ -16,18 +20,21 @@ of key arguments:
         @c(:mirror). Usually @c(:mirror) gives better results, but
         is a little slower.)
   @item(@c(steps) Specify the number of filtering and downsampling
-        steps taken to perform the transform. A special value @c(0)
-        means the full transform.)
+        steps taken to perform the transform. This value can be
+        negative or zero. Zero means the full DWT transform and a
+        negative value means @i(maximal dwt steps) - @c((abs steps)).)
 @end(enum)"
   (declare (type (sa-sb 32) array)
-           (type non-negative-fixnum steps))
+           (type fixnum steps))
   (with-lifting-scheme (wavelet boundary-style)
     (let* ((len (check-power-of-2 (length array)))
            (max-steps (1- (integer-length len)))
-           (steps (if (zerop steps) max-steps (min steps max-steps)))
+           (dwt-steps (clamp-steps
+                       (if (> steps 0) steps (+ max-steps steps))
+                       max-steps))
            (tmp (make-array (/ len 2) :element-type '(signed-byte 32))))
-      (declare (type non-negative-fixnum max-steps len))
-      (loop for i below steps do
+      (declare (type non-negative-fixnum max-steps dwt-steps len))
+      (loop for i below dwt-steps do
            (funcall *lifting-func* array :end (ash len (- i)))
            (phase-split array :tmp tmp :end (ash len (- i)))))
   array))
@@ -40,14 +47,16 @@ of key arguments:
 @c(boundary-style) and @c(steps) arguments must be the same as for the
 corresponding call to DWT! function"
   (declare (type (sa-sb 32) array)
-           (type non-negative-fixnum steps))
+           (type fixnum steps))
   (with-lifting-scheme (wavelet boundary-style :inverse t)
     (let* ((len (check-power-of-2 (length array)))
            (max-steps (1- (integer-length len)))
-           (steps (if (zerop steps) max-steps (min steps max-steps)))
+           (dwt-steps (clamp-steps
+                       (if (> steps 0) steps (+ max-steps steps))
+                       max-steps))
            (tmp (make-tmp-array len)))
-      (declare (type non-negative-fixnum len))
-      (loop for i from (- max-steps steps) below max-steps do
+      (declare (type non-negative-fixnum max-steps dwt-steps len))
+      (loop for i from (- max-steps dwt-steps) below max-steps do
            (phase-mix array :tmp tmp :end (ash 2 i))
            (funcall *lifting-func* array :end (ash 2 i))))
     array))

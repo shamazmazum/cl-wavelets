@@ -91,7 +91,7 @@
 (test dwt-inverse-identity
   "Check if DWT^{-1} DWT = I"
   (let ((array (sine-sequence)))
-    (dolist (steps '(0 1 2))
+    (dolist (steps '(-1 0 1))
       (dolist (boundary-style '(:mirror :zero))
         (dolist (wavelet (get-wavelets))
           (is (equalp array
