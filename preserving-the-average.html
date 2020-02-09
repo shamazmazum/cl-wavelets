@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+  Preserving the average &ndash; cl-wavelets
+</title>
+    <link rel="stylesheet" href="static/style.css"/>
+    
+  <link rel="stylesheet" href="static/highlight.css"/>
+  <script src="static/highlight.js"></script>
+  <style>
+   /* Highlight the current top-level TOC item, and hide the TOC of all other items */
+
+   .toc a[data-node="preserving-the-average"] {
+       color: #AD3108;
+   }
+
+   .toc ol {
+       display: none;
+   }
+
+   .toc > ol {
+       display: block;
+   }
+
+   .toc li a[data-node="preserving-the-average"] + ol {
+       display: block;
+   }
+
+   .toc li a[data-node="preserving-the-average"] + ol li {
+       font-size: 16px;
+       margin: 0 10px;
+   }
+
+   .toc li a[active] + ol li:first-child {
+       margin-top: 5px;
+   }
+  </style>
+
+  </head>
+  <body>
+    
+  <h1 class="doc-title">cl-wavelets » Preserving the average</h1>
+  <article id="article" data-section="preserving-the-average">
+    <aside>
+      <ol class="toc"><li><a href="index.html" data-node="index">Overview</a></li><li><a href="wavelets.html" data-node="wavelets">Wavelets</a></li><li><a href="extending-signal-over-array-boundaries.html" data-node="extending-signal-over-array-boundaries">Extending signal over array boundaries</a></li><li><a href="dwt.html" data-node="dwt">DWT</a></li><li><a href="signal-in-frequency-domain.html" data-node="signal-in-frequency-domain">Signal in frequency domain</a></li><li><a href="spectrogram.html" data-node="spectrogram">Spectrogram</a></li><li><a href="best-basis-pwt.html" data-node="best-basis-pwt">Best-basis PWT</a></li><li><a href="preserving-the-average.html" data-node="preserving-the-average">Preserving the average</a></li></ol>
+    </aside>
+    <main class="codex-section">
+      <p>
+  Wavelets present in this library are designed to preserve an average of
+  a signal in the first coefficients of the discrete wavelet transform. DWT is
+  performed in several steps. Each step divides the input signal into two
+  downsampled (also by the factor of 2) parts: the average of the signal and the
+  details. The inverse DWT can be performed upsampling these parts and
+  &quot;applying&quot; the details to the average. The average is called so because its
+  mean value equals to the mean of the original input signal. Performing the
+  full DWT results in the first element of an output array to be equal to the
+  mean of all elements in the input.</p><p>  Unfortunatelly, all said above is not exactly true. When the library processes
+  a signal near to its borders (at the beginning and the end of an input array),
+  some bad effects appear. These effects originate from the fact that a wavelet
+  has some &quot;location&quot; in time and cannot &quot;vanish&quot; abruptly at the borders of
+  your input. Moreover, these effects are cummulative, meaning they increase
+  both with the number of vanishing moments and the steps you need to perform
+  DWT. The only wavelet which preserve the mean exactly (give or take some small
+  constant which appears because of rounding) is Haar wavelet. All other
+  wavelets have some error because of these effects.</p><p>  To demonstrate this error look at the plot below. You can see a random input
+  signal (thin blue line) which consists of 4096 samples and is later
+  transformed using DWT as follows: <code>(wavelets:dwt *input* :wavelet wavelet
+  :steps -4)</code>. <code>:steps -4</code> part means that the last four steps of DWT were
+  omitted. In this case a mean of the original signal equals to a mean of the
+  first 2^4 = 16 samples of the transformed signal. These mean values are
+  plotted for each wavelet as horizontal lines. You can see that Haar and CDF
+  (2,2) wavelets give the most exact values of the mean and CDF (3,1) and (4,2)
+  give a bit wrong value.</p><p>  Conclusion: If you want DWT to preserve the mean of your signal you either
+  have to use Haar wavelet or specify <code>:steps</code> argument with some reasonable
+  negative value.
+  <img src="average.png"/>
+</p>
+    </main>
+  </article>
+  <footer>
+    <div class="info">
+      Created with <a href="https://github.com/CommonDoc/codex">Codex</a>.
+    </div>
+  </footer>
+  <script>
+   HighlightLisp.highlight_auto();
+  </script>
+
+  </body>
+</html>
