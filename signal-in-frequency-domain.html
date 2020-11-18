@@ -57,8 +57,13 @@
   signal in the first half of a transformed array. This will result in
   unnormalized output produced by functions described in this section.
   
-      <div class="codex-error codex-no-node">No node with name <code>frequency-domain!</code>.</div>
-      <div class="codex-error codex-no-node">No node with name <code>frequency-domain</code>.</div>
+      <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">frequency-domain!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style zero))</code><div class="codex-docstring"><p>Translate a signal into frequency domain using PWT. <code>wavelet</code> and
+<code>boundary-style</code> have the same meaning as in <code>dwt!</code>. This function
+modifies the <code>array</code>.</p><p>
+<b>NB</b>: CDF-4-2 gives very poor results for the reasons yet
+unknown. Do not use it. CDF-2-2 seems to be the best.</p></div></div>
+      <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">frequency-domain</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style zero))</code><div class="codex-docstring">Translate a signal in frequency domain using PWT. This is a
+non-destructive version of <code>frequency-domain!</code>.</div></div>
    
 
     </main>
