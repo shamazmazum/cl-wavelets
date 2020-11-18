@@ -55,10 +55,23 @@
    modifies its first argument. The inverse of DWT can be performed
    using <code>dwt-inverse</code> and <code>dwt-inverse!</code>.
    
-      <div class="codex-error codex-no-node">No node with name <code>dwt!</code>.</div>
-      <div class="codex-error codex-no-node">No node with name <code>dwt-inverse!</code>.</div>
-      <div class="codex-error codex-no-node">No node with name <code>dwt</code>.</div>
-      <div class="codex-error codex-no-node">No node with name <code>dwt-inverse</code>.</div>
+      <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">dwt!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (steps 0))</code><div class="codex-docstring">Perform in-place DWT transform on array of integer samples. Meaning
+of key arguments:
+<ol><li><code>wavelet</code> Wavelet to use. Consult
+        <a id="wavelets" href="wavelets.html" data-node="wavelets">wavelets</a> section of this manual to know
+        possible values of this argument.</li><li><code>boundary-style</code> Determines how the signal is extended
+        beyond array boundaries. Can be <code>:zero</code> or
+        <code>:mirror</code>. Usually <code>:mirror</code> gives better results, but
+        is a little slower.</li><li><code>steps</code> Specify the number of filtering and downsampling
+        steps taken to perform the transform. This value can be
+        negative or zero. Zero means the full DWT transform and a
+        negative value means <i>maximal dwt steps</i> - <code>(abs steps)</code>.</li></ol></div></div>
+      <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">dwt-inverse!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (steps 0))</code><div class="codex-docstring">Perform in-place inversion of DWT transform. The <code>wavelet</code>,
+<code>boundary-style</code> and <code>steps</code> arguments must be the same as for the
+corresponding call to DWT! function</div></div>
+      <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">dwt</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (steps 0))</code><div class="codex-docstring">This function is a non-destructive equivalent of <code>dwt!</code> function</div></div>
+      <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">dwt-inverse</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (steps 0))</code><div class="codex-docstring">This function is a non-destructive equivalent of <code>dwt-inverse!</code>
+function</div></div>
    
 
     </main>

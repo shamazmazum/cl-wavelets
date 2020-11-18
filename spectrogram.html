@@ -56,9 +56,16 @@
   produce a spectrogram of an uncompressed wav file (it uses only the
   first channel).
   
-    <div class="codex-error codex-no-node">No node with name <code>spectrogram</code>.</div>
-    <div class="codex-error codex-no-node">No node with name <code>*wavelet*</code>.</div>
-    <div class="codex-error codex-no-node">No node with name <code>*block-length*</code>.</div>
+    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">spectrogram</code><code class="codex-lambda-list">(filename-wav filename-jpg &amp;key (w 600) (h 800) (block-length *block-length*) (wavelet *wavelet*))</code><div class="codex-docstring"><p>Build a spectrogram for the first channel of an audio file in WAV
+format with the name <code>filename-wav</code>. The spectrogram is written as a
+jpeg image with the name <code>filename-jpg</code>. <code>w</code> and <code>h</code> parameters
+define dimensions of the image.</p><p>The spectrogram is built using <code>frequency-domain</code> function with data
+block of length <code>block-length</code> each constructed from the input data.
+Wavelet <code>wavelet</code> is used in the PWT algorithm.</p></div></div>
+    <div class="codex-doc-node codex-variable"><code class="codex-name">*wavelet*</code><div class="codex-docstring">Wavelet used for spectrogram calculation. <b>NB</b>: <code>:cdf-4-2</code> works
+very bad, do not use it. <code>:cdf-2-2</code> is the best choice.</div></div>
+    <div class="codex-doc-node codex-variable"><code class="codex-name">*block-length*</code><div class="codex-docstring">The size of data chunks the input signal is divided to before PWT
+is performed. Must be a power of 2.</div></div>
   </p><p>  Here is some examples of histograms with decription (all of them are obtained
   using CDF-2-2 wavelet):
   </p><figure><img src="saw-chirp.jpg"/><figcaption>    Band-limited saw up-chirp signal. You can see five harmonics here.
