@@ -63,25 +63,13 @@
   magnitude is less than a threshold is as big as possible.</p><p>  Like DWT, PWT produces an array with transformed signal, but also a key value
   used as hint to inverse functions to properly inverse the transform.</p><p>  
     <div class="codex-doc-node codex-variable"><code class="codex-name">*threshold*</code><div class="codex-docstring">Default value for an argument to <code>make-threshold-cost</code>.</div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">make-threshold-cost</code><code class="codex-lambda-list">(&amp;optional (threshold *threshold*))</code><div class="codex-docstring">Make a cost function which depends on the number of items whose
-  magnitude is greater than <code>threshold</code>.</div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt!</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (cost *cost-func*))</code><div class="codex-docstring"><p>Perform a best-basis PWT transform of an <code>array</code>. Unlike DWT
-which has a fixed basis of scaled and translated mother wavelet
-functions and a scaling function, this transform picks the best basis,
-minimizing the <code>cost</code> function over possible results. The meaning of
-<code>wavelet</code> and <code>boundary-style</code> arguments is the same as for DWT.
-See the documentation for <code>dwt!</code> for information.</p><p>Two values are returned: the first is a transformed array and the
-second is a basis key object which must be passed to <code>pwt-inverse!</code>
-or <code>pwt-inverse</code> to invert the transform.</p><p>This function modifies its first argument.</p></div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt-inverse!</code><code class="codex-lambda-list">(array basis-key &amp;key (wavelet haar) (boundary-style mirror))</code><div class="codex-docstring">Inverse the PWT. The <code>array</code> and <code>basis-key</code> must match the
-values returned by <code>pwt!</code> or <code>pwt</code>. <code>wavelet</code> and
-<code>boundary-style</code> must also match their counterparts used for the
-forward transform.</div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt</code><code class="codex-lambda-list">(array &amp;key (wavelet haar) (boundary-style mirror) (cost *cost-func*))</code><div class="codex-docstring">This function is a non-destructive version of <code>pwt!</code>.</div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">pwt-inverse</code><code class="codex-lambda-list">(array basis-key &amp;key (wavelet haar) (boundary-style mirror))</code><div class="codex-docstring">This is a non-destructive version of <code>pwt-inverse!</code>.</div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">basis-key=&gt;bit-vector</code><code class="codex-lambda-list">(basis-key)</code><div class="codex-docstring">Transform a basis key returned from <code>pwt</code> or <code>pwt!</code> to a bit
-vector form.</div></div>
-    <div class="codex-doc-node codex-operator codex-function"><code class="codex-name">bit-vector=&gt;basis-key</code><code class="codex-lambda-list">(vector)</code><div class="codex-docstring">Transform a bit vector to a basis key.</div></div>
+    <div class="codex-error codex-no-node">No node with name <code>make-threshold-cost</code>.</div>
+    <div class="codex-error codex-no-node">No node with name <code>pwt!</code>.</div>
+    <div class="codex-error codex-no-node">No node with name <code>pwt-inverse!</code>.</div>
+    <div class="codex-error codex-no-node">No node with name <code>pwt</code>.</div>
+    <div class="codex-error codex-no-node">No node with name <code>pwt-inverse</code>.</div>
+    <div class="codex-error codex-no-node">No node with name <code>basis-key=&gt;bit-vector</code>.</div>
+    <div class="codex-error codex-no-node">No node with name <code>bit-vector=&gt;basis-key</code>.</div>
 
 </p>
     </main>
