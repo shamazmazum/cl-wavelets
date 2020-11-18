@@ -15,6 +15,7 @@ install:
   - sudo apt-get install info install-info
   - curl https://raw.githubusercontent.com/lispci/cl-travis/master/install.sh | sh
   - git clone --depth=1 git://github.com/shamazmazum/codex.git ~/lisp/codex
+  - git clone --depth=1 git://github.com/shamazmazum/docparser.git ~/lisp/docparser
 
 script:
   - cl -f $TRAVIS_BUILD_DIR/tests/travis.lisp
