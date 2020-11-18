@@ -9,7 +9,6 @@ env:
     - LISP=ccl
     - LISP=abcl
     - LISP=ecl
-    - LISP=allegro
 
 install:
   - sudo apt-get install info install-info
@@ -30,3 +29,4 @@ deploy:
   edge: true
   on:
     branch: master
+    condition: $LISP = sbcl
