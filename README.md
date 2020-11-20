@@ -1,6 +1,6 @@
 cl-wavelets
 ===========
-[![Build Status](https://travis-ci.com/shamazmazum/cl-wavelets.svg?branch=master)](https://travis-ci.com/shamazmazum/cl-wavelets)
+[![Build Status](https://api.cirrus-ci.com/github/shamazmazum/cl-wavelets.svg)](https://cirrus-ci.com/github/shamazmazum/cl-wavelets)
 
 **cl-wavelets** is a library with a set of algorithms related to
 various kinds of wavelet transform. Currently they all work with
