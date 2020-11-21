@@ -1,6 +1,7 @@
 cl-wavelets
 ===========
 [![Build Status](https://api.cirrus-ci.com/github/shamazmazum/cl-wavelets.svg)](https://cirrus-ci.com/github/shamazmazum/cl-wavelets)
+![CI](https://github.com/shamazmazum/cl-wavelets/workflows/CI/badge.svg)
 
 **cl-wavelets** is a library with a set of algorithms related to
 various kinds of wavelet transform. Currently they all work with
