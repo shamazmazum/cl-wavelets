@@ -32,7 +32,7 @@ of key arguments:
            (dwt-steps (clamp-steps
                        (if (> steps 0) steps (+ max-steps steps))
                        max-steps))
-           (tmp (make-array (/ len 2) :element-type '(signed-byte 32))))
+           (tmp (make-tmp-array len)))
       (declare (type alex:non-negative-fixnum max-steps dwt-steps len))
       (loop for i below dwt-steps do
            (funcall *lifting-func* array :end (ash len (- i)))

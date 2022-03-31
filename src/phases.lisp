@@ -1,10 +1,9 @@
 (in-package :cl-wavelets)
 (declaim (optimize (speed 3)))
 
-(declaim (ftype (function
-                 (alex:non-negative-fixnum)
-                 (values alex:non-negative-fixnum &optional))
-                check-power-of-2-p))
+(sera:-> check-power-of-2-p
+         (alex:non-negative-fixnum)
+         (values alex:non-negative-fixnum &optional))
 (defun check-power-of-2 (x)
   "Check if the argument is a power of two."
   (declare (type alex:non-negative-fixnum x))
