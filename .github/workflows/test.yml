@@ -5,35 +5,15 @@ on: [push, pull_request]
 jobs:
   test_and_docs:
     runs-on: ubuntu-latest
-    env:
-      LISP: sbcl
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Checkout Codex
-        uses: actions/checkout@v2
-        with:
-          repository: shamazmazum/codex
-          path: ~/lisp/codex
-      - name: Checkout docparser
-        uses: actions/checkout@v2
-        with:
-          repository: shamazmazum/docparser
-          path: ~/lisp/docparser
-      - name: Install dependencies
+      - name: Install roswell
         run: |
-          sudo apt-get install info install-info
-      - name: Install CIM
+          curl -L https://raw.githubusercontent.com/roswell/roswell/master/scripts/install-for-ci.sh | sh
+      - name: Install Ultralisp
         run: |
-          curl -L https://raw.githubusercontent.com/shamazmazum/cl-cirrus/github-actions/install-actions.sh | sh
+          ros -e '(ql-dist:install-dist "http://dist.ultralisp.org/" :prompt nil)'
       - name: Run tests
         run: |
-          cl -f $GITHUB_WORKSPACE/tests/travis.lisp
-      - name: Build documentation
-        run: |
-          cl -l codex -e '(codex:document :cl-wavelets :skip-undocumented t)'
-      - name: Deploy to GH pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: docs/build/cl-wavelets/html
+          ros -l $GITHUB_WORKSPACE/tests/travis.lisp
