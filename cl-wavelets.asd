@@ -14,6 +14,7 @@
                  (:file "dwt")
                  (:file "freqdomain")
                  (:file "pwt"))
+    :depends-on (:alexandria :serapeum)
     :in-order-to ((test-op (load-op "cl-wavelets/tests")))
     :perform (test-op (op system)
                       (declare (ignore op system))

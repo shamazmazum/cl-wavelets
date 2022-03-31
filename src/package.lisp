@@ -1,6 +1,8 @@
 (defpackage cl-wavelets
   (:use #:cl)
   (:nicknames #:wavelets)
+  (:local-nicknames (:alex :alexandria)
+                    (:sera :serapeum))
   (:export #:get-wavelets
            #:dwt
            #:dwt-inverse

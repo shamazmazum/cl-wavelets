@@ -36,7 +36,7 @@ TODO: Allow access to n-th odd or even sample."
      (declaim (ftype lifting-function ,name))
      (defun ,name (array &key (start 0) (end (length array)))
        (declare (type (sa-sb 32) array)
-                (type non-negative-fixnum start end))
+                (type alex:non-negative-fixnum start end))
        (symbol-macrolet ((even (aref array (+ 0 i)))
                          (odd  (aref array (+ 1 i)))
                          (even-1 (aref-extended array (+ -2 i)

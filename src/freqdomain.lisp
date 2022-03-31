@@ -9,12 +9,12 @@
                          tmp
                          inverse)
   (declare (type (sa-sb 32) array)
-           (type non-negative-fixnum start end)
+           (type alex:non-negative-fixnum start end)
            (type boolean inverse))
   (if (< (- end start) 2)
       array
       (let ((half (/ (+ start end) 2)))
-        (declare (type non-negative-fixnum half))
+        (declare (type alex:non-negative-fixnum half))
         (phase-split
          (funcall *lifting-func*
                   array

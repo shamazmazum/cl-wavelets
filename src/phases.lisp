@@ -2,12 +2,12 @@
 (declaim (optimize (speed 3)))
 
 (declaim (ftype (function
-                 (non-negative-fixnum)
-                 (values non-negative-fixnum &optional))
+                 (alex:non-negative-fixnum)
+                 (values alex:non-negative-fixnum &optional))
                 check-power-of-2-p))
 (defun check-power-of-2 (x)
   "Check if the argument is a power of two."
-  (declare (type non-negative-fixnum x))
+  (declare (type alex:non-negative-fixnum x))
   (if (zerop (logand x (1- x))) x
       (error "Argument must be power of 2")))
 
@@ -20,11 +20,11 @@
   "Split even and odd samples in the array. If INVERSE is T, higher
 frequencies subband will be stored before lower frequencies subband."
   (declare (type (sa-sb 32) array)
-           (type non-negative-fixnum start end)
+           (type alex:non-negative-fixnum start end)
            (type boolean inverse))
   (let* ((half (/ (- end start) 2))
          (tmp (if tmp tmp (make-array half :element-type '(sb 32)))))
-    (declare (type non-negative-fixnum half)
+    (declare (type alex:non-negative-fixnum half)
              (type (sa-sb 32) tmp))
     ;; Copy odd samples to tmp
     (loop
@@ -52,10 +52,10 @@ frequencies subband will be stored before lower frequencies subband."
 (defun phase-mix (array &key (start 0) (end (length array)) tmp)
   "Interleave even and odd samples in the array"
   (declare (type (sa-sb 32) array)
-           (type non-negative-fixnum start end))
+           (type alex:non-negative-fixnum start end))
   (let* ((half (/ (- end start) 2))
          (tmp (if tmp tmp (make-array half :element-type '(sb 32)))))
-    (declare (type non-negative-fixnum half)
+    (declare (type alex:non-negative-fixnum half)
              (type (sa-sb 32) tmp))
     ;; Copy even samples to tmp
     (loop
@@ -82,5 +82,5 @@ frequencies subband will be stored before lower frequencies subband."
 
 (defun make-tmp-array (length)
   "Make temporary array for PHASE-SPLIT and PHASE-MIX functions"
-  (declare (type positive-fixnum length))
+  (declare (type alex:positive-fixnum length))
   (make-array (/ length 2) :element-type '(signed-byte 32)))

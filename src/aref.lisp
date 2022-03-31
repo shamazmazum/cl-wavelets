@@ -19,7 +19,7 @@ an array periodic. Can be used with two-filters algorithm and all
 wavelets."
   (declare (type (sa-sb 32) array)
            (type fixnum idx)
-           (type non-negative-fixnum start end))
+           (type alex:non-negative-fixnum start end))
   ;; While filtering, the following assertion always holds
   (assert (>= idx start))
   (aref array (+ start
@@ -37,14 +37,14 @@ or in two-filters algorithm with symmetric filters with odd number of
 coefficients"
   (declare (type (sa-sb 32) array)
            (type fixnum idx)
-           (type non-negative-fixnum start end))
+           (type alex:non-negative-fixnum start end))
   (let* ((length (- end start))
          (fit-idx (rem (abs (- idx start))
                        (ash (1- length) 1))))
-    (declare (type non-negative-fixnum length fit-idx))
+    (declare (type alex:non-negative-fixnum length fit-idx))
     (aref array
           (+ start
-             (the non-negative-fixnum
+             (the alex:non-negative-fixnum
                   (if (< fit-idx length) fit-idx
                       (- (ash (1- length) 1) fit-idx)))))))
 
@@ -59,11 +59,11 @@ the wavelet transform using symmetric wavelets with even number of
 coefficients and two-filters algorithm."
   (declare (type (sa-sb 32) array)
            (type fixnum idx)
-           (type non-negative-fixnum start end))
+           (type alex:non-negative-fixnum start end))
   (let* ((length (- end start))
          (pos-idx (if (< idx 0) (abs (1+ idx)) idx))
          (fit-idx (rem pos-idx (ash length 1))))
-    (declare (type non-negative-fixnum
+    (declare (type alex:non-negative-fixnum
                    length pos-idx fit-idx))
     (aref array
           (if (< fit-idx length) fit-idx
@@ -84,7 +84,7 @@ way how this function extends array out of its bounds depends on value
 of *AREF-FUNC*."
   (declare (type (sa-sb 32) array)
            (type fixnum idx)
-           (type non-negative-fixnum start end))
+           (type alex:non-negative-fixnum start end))
   (if (and (>= idx start)
            (<  idx end))
       (aref array idx)

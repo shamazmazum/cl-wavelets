@@ -33,7 +33,7 @@ of key arguments:
                        (if (> steps 0) steps (+ max-steps steps))
                        max-steps))
            (tmp (make-array (/ len 2) :element-type '(signed-byte 32))))
-      (declare (type non-negative-fixnum max-steps dwt-steps len))
+      (declare (type alex:non-negative-fixnum max-steps dwt-steps len))
       (loop for i below dwt-steps do
            (funcall *lifting-func* array :end (ash len (- i)))
            (phase-split array :tmp tmp :end (ash len (- i)))))
@@ -55,7 +55,7 @@ corresponding call to DWT! function"
                        (if (> steps 0) steps (+ max-steps steps))
                        max-steps))
            (tmp (make-tmp-array len)))
-      (declare (type non-negative-fixnum max-steps dwt-steps len))
+      (declare (type alex:non-negative-fixnum max-steps dwt-steps len))
       (loop for i from (- max-steps dwt-steps) below max-steps do
            (phase-mix array :tmp tmp :end (ash 2 i))
            (funcall *lifting-func* array :end (ash 2 i))))

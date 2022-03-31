@@ -8,14 +8,14 @@
   (cost 0 :type fixnum)
   (preferred nil :type boolean))
 
-(declaim (type positive-fixnum *threshold*))
+(declaim (type alex:positive-fixnum *threshold*))
 (defparameter *threshold* 1
   "Default value for an argument to @c(make-threshold-cost).")
 
 (defun make-threshold-cost (&optional (threshold *threshold*))
   "Make a cost function which depends on the number of items whose
   magnitude is greater than @c(threshold)."
-  (declare (type positive-fixnum threshold))
+  (declare (type alex:positive-fixnum threshold))
   (flet ((threshold-cost (array)
            (declare (type (sa-sb 32) array))
            (count-if
@@ -83,11 +83,11 @@
 (defun concatenate-into (array array-list)
   (declare (type (sa-sb 32) array))
   (let ((i 0))
-    (declare (type non-negative-fixnum i))
+    (declare (type alex:non-negative-fixnum i))
     (dolist (part array-list)
       (declare (type (sa-sb 32) part))
       (dotimes (j (length part))
-        (declare (type non-negative-fixnum j))
+        (declare (type alex:non-negative-fixnum j))
         (setf (aref array i)
               (aref part j))
         (incf i))))
@@ -139,10 +139,10 @@ values returned by @c(pwt!) or @c(pwt). @c(wavelet) and
 forward transform."
   (declare (type (sa-sb 32) array))
   (labels ((pwt-inverse% (basis-key start end)
-             (declare (type non-negative-fixnum start end))
+             (declare (type alex:non-negative-fixnum start end))
              (if basis-key
                  (let ((half (/ (+ end start) 2)))
-                   (declare (type non-negative-fixnum half))
+                   (declare (type alex:non-negative-fixnum half))
                    (pwt-inverse% (first basis-key) start half)
                    (pwt-inverse% (second basis-key) half end)
                    (phase-mix array
