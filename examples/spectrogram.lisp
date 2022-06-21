@@ -107,15 +107,15 @@ INPUT, and the output image is in array OUTPUT which has element type
   "Read an audio file in wav format with the name NAME and return a
 list of channel data and a format subchunk."
   (with-open-file (in name :element-type '(unsigned-byte 8))
-    (let* ((reader (open-wav in))
-           (subchunks (read-wav-header reader))
+    (let* ((reader (wav:open-wav in))
+           (subchunks (wav:read-wav-header reader))
            (format (car subchunks)))
-      (reader-position-to-audio-data reader subchunks)
+      (wav:reader-position-to-audio-data reader subchunks)
       (values
-       (read-wav-data reader
-                      format
-                      (samples-num subchunks)
-                      :decompose t)
+       (wav:read-wav-data reader
+                          format
+                          (wav:samples-num subchunks)
+                          :decompose t)
        format))))
 
 (defun spectrogram (filename-wav
