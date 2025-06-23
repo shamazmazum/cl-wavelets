@@ -100,7 +100,7 @@ TODO: Allow access to n-th odd or even sample."
 (def-lifting-scheme (cdf-3-1 :cdf-3-1 :forward)
   (decf even (truncate odd-1 3))
   (decf odd  (ash (+ (* 9 even)
-                       (* 3 even+1))
+                     (* 3 even+1))
                   -3))
   (progn
     (incf even (truncate (* 2 odd) 9))
