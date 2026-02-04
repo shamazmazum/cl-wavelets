@@ -5,7 +5,7 @@
     :description "Wavelet transform library"
     :license "2-clause BSD"
     :serial t
-    :pathname "src/"
+    :pathname "src"
     :components ((:file "package")
                  (:file "types")
                  (:file "aref")
@@ -25,7 +25,7 @@
     :version "0.1"
     :author "Vasily Postnicov <shamaz.mazum@gmail.com>"
     :license "2-clause BSD"
-    :pathname "tests/"
+    :pathname "tests"
     :components ((:file "package")
                  (:file "tests" :depends-on ("package")))
     :depends-on (:cl-wavelets :fiveam))
@@ -35,7 +35,11 @@
     :version "0.1"
     :author "Vasily Postnicov <shamaz.mazum@gmail.com>"
     :license "2-clause BSD"
-    :pathname "examples/"
+    :pathname "examples"
     :components ((:file "package")
                  (:file "spectrogram" :depends-on ("package")))
     :depends-on (:cl-wavelets :easy-audio :cl-jpeg))
+
+;; For qlot
+(defsystem :cl-wavelets/docs
+    :depends-on (:cl-wavelets :codex))
