@@ -14,10 +14,6 @@
  (:class qlot/source/ql:source-ql
   :initargs (:%version :latest)
   :version "ql-2024-10-12"))
-("cl-jpeg" .
- (:class qlot/source/ql:source-ql
-  :initargs (:%version :latest)
-  :version "ql-2023-02-14"))
 ("easy-audio" .
  (:class qlot/source/ql:source-ql
   :initargs (:%version :latest)
@@ -30,3 +26,7 @@
  (:class qlot/source/github:source-github
   :initargs (:repos "shamazmazum/docparser" :ref nil :branch nil :tag nil)
   :version "github-93a327d9e1c990fc6ec13251ffae119f3c168053"))
+("cl-jpeg" .
+ (:class qlot/source/github:source-github
+  :initargs (:repos "sharplispers/cl-jpeg" :ref nil :branch nil :tag nil)
+  :version "github-bef2c3bb64dd19cb31c26338dcbecbf2542a2619"))
