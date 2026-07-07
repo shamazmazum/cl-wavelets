@@ -14,10 +14,6 @@
  (:class qlot/source/ql:source-ql
   :initargs (:%version :latest)
   :version "ql-2024-10-12"))
-("easy-audio" .
- (:class qlot/source/ql:source-ql
-  :initargs (:%version :latest)
-  :version "ql-2026-01-01"))
 ("codex" .
  (:class qlot/source/github:source-github
   :initargs (:repos "shamazmazum/codex" :ref nil :branch nil :tag nil)
@@ -30,3 +26,11 @@
  (:class qlot/source/github:source-github
   :initargs (:repos "sharplispers/cl-jpeg" :ref nil :branch nil :tag nil)
   :version "github-bef2c3bb64dd19cb31c26338dcbecbf2542a2619"))
+("easy-audio" .
+ (:class qlot/source/github:source-github
+  :initargs (:repos "shamazmazum/easy-audio" :ref nil :branch nil :tag "v1.3.1")
+  :version "github-457ac96ae3cdf9d79ab476e78093eb146c3c713c"))
+("stateless-iterators" .
+ (:class qlot/source/github:source-github
+  :initargs (:repos "shamazmazum/stateless-iterators" :ref nil :branch nil :tag "v0.2")
+  :version "github-5d19b6cfa5756078d892d8c8a5b306db0639bd15"))

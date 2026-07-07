@@ -1,7 +1,8 @@
 ql alexandria
 ql serapeum
 ql fiveam
-ql easy-audio
 github shamazmazum/codex
 github shamazmazum/docparser
 github sharplispers/cl-jpeg
+github shamazmazum/easy-audio :tag v1.3.1
+github shamazmazum/stateless-iterators :tag v0.2
